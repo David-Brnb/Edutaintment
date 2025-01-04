@@ -9,16 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var play=false
-    @State private var table = 2.0
-    @State private var multiples_1: [Int] = [];
-    let range = 2.0...12.0
-    @State private var questions = 10
-    let questionsSet = [5, 10, 20]
-    @State private var score = 0
-    @State private var answered = 0
-    @State private var answer = ""
-    @State private var submited = false
-    @State private var it = 0
+    @StateObject private var gameLogic = GameLogic()
     
     
     var body: some View {
@@ -28,19 +19,19 @@ struct ContentView: View {
                     if !play {
                         Section("Table"){
                             Stepper (
-                                value: $table,
-                                in: range,
+                                value: $gameLogic.table,
+                                in: gameLogic.range,
                                 step: 1
                             ) {
-                                Text("Table:  \(String(format: "%.0f", table))")
+                                Text("Table:  \(String(format: "%.0f", gameLogic.table))")
                             }
                             .font(.largeTitle)
                             
                         }
                         
                         Section("Pick the number of questions"){
-                            Picker("Tip percentage", selection: $questions){
-                                ForEach(questionsSet, id: \.self) {
+                            Picker("Tip percentage", selection: $gameLogic.questions){
+                                ForEach(gameLogic.questionsSet, id: \.self) {
                                     Text($0, format: .number)
                                 }
                             }
@@ -50,47 +41,44 @@ struct ContentView: View {
                         
                         
                     } else {
-                        if(answered < questions){
-                            let res = Int(answer.filter { $0.isNumber }) ?? 0
-                            let mult = multiples_1[it]
+                        if(gameLogic.answered < gameLogic.questions){
+                            let currentQuestion = gameLogic.currentQuestionText
                             
                             Section("Question"){
-                                Text("\(mult) x \(String(format: "%.0f", table))")
+                                Text(currentQuestion)
                                     .frame(width: 300)
                                     .font(.largeTitle)
                             }
                             
                             Section("Enter your answer"){
                                 
-                                TextField("Answer", text: $answer)
+                                TextField("Answer", text: $gameLogic.answer)
                                     .keyboardType(.numberPad)
                                     .font(.largeTitle)
                                     .multilineTextAlignment(.center)
-                                    .onSubmit{
-                                        submited.toggle()
-                                        if(res == mult*Int(table)){
-                                            score+=1
-                                        }
-                                    }
+                                    .onSubmit { gameLogic.submitAnswer() }
                                 
                             }
                             
-                            if submited {
+                            if gameLogic.submitted {
                                 Section ("Result") {
-                                    let result = (res == mult*Int(table))
-                                    Text(result ? "Correct" : "Incorrect")
+                                    let isCorrect = gameLogic.checkAnswer()
+                                    Text(isCorrect ? "Correct" : "Incorrect")
                                     
                                     Button("Next"){
-                                        submited = false
-                                        answer = ""
-                                        it+=1
-                                        answered += 1
+                                        gameLogic.nextQuestion()
                                     }
                                 }
                             }
                             
                         } else {
-                            Text("Your Score is: \(score) out of \(questions)")
+                            Section("Game Over") {
+                                Text("Your Score is: \(gameLogic.score) out of \(gameLogic.questions)")
+                                Button("Play Again") {
+                                    gameLogic.resetGame()
+                                    play = false
+                                }
+                            }
                         }
                         
                     }
@@ -100,14 +88,14 @@ struct ContentView: View {
             }
             .toolbar{
                 if play {
-                    Text("Progress: \(answered) / \(questions)")
+                    Text("Progress: \(gameLogic.answered) / \(gameLogic.questions)")
                 }
                 Button(play ? "Configure" : "Play"){
                     if(play){
-                        resetGame()
+                        gameLogic.resetGame()
                         
                     } else {
-                        startGame()
+                        gameLogic.startGame()
                         
                     }
                     play.toggle()
@@ -118,20 +106,6 @@ struct ContentView: View {
         }
     }
     
-    func resetGame() {
-        multiples_1.removeAll()
-        table = 2
-        questions = 10
-    }
-    
-    func startGame() {
-        for _ in (1...questions){
-            multiples_1.append(Int.random(in: 2...10))
-        }
-        score = 0
-        answered = 0
-        answer = ""
-    }
 }
 
 #Preview {

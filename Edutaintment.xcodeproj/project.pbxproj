@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		357763E72D28EA120056C14C /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357763E62D28EA120056C14C /* GameLogic.swift */; };
 		35AA82D12D20FD9E00A64000 /* EdutaintmentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AA82D02D20FD9E00A64000 /* EdutaintmentApp.swift */; };
 		35AA82D32D20FD9E00A64000 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AA82D22D20FD9E00A64000 /* ContentView.swift */; };
 		35AA82D52D20FD9F00A64000 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35AA82D42D20FD9F00A64000 /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		357763E62D28EA120056C14C /* GameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
 		35AA82CD2D20FD9E00A64000 /* Edutaintment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Edutaintment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35AA82D02D20FD9E00A64000 /* EdutaintmentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdutaintmentApp.swift; sourceTree = "<group>"; };
 		35AA82D22D20FD9E00A64000 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			children = (
 				35AA82D02D20FD9E00A64000 /* EdutaintmentApp.swift */,
 				35AA82D22D20FD9E00A64000 /* ContentView.swift */,
+				357763E62D28EA120056C14C /* GameLogic.swift */,
 				35AA82D42D20FD9F00A64000 /* Assets.xcassets */,
 				35AA82D62D20FD9F00A64000 /* Preview Content */,
 			);
@@ -257,6 +260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				357763E72D28EA120056C14C /* GameLogic.swift in Sources */,
 				35AA82D32D20FD9E00A64000 /* ContentView.swift in Sources */,
 				35AA82D12D20FD9E00A64000 /* EdutaintmentApp.swift in Sources */,
 			);
